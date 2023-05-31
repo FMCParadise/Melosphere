@@ -1,0 +1,26 @@
+<svg width="227" height="415" viewBox="0 0 227 415" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_df_1205_640)">
+<path d="M115.452 9.49648C108.864 3.1246 99.1019 1.24623 90.5856 4.71094C53.4873 19.7977 -39.3957 65.5823 30.1209 151.118C97.2674 233.734 93.8663 305.55 89.4675 332.1C88.3628 338.764 84.3791 344.611 78.5275 348.076C61.1065 358.39 64.6483 384.362 84.1983 389.732C114.642 398.088 147.642 406.996 150.066 406.996C154.619 406.996 225.22 305.397 222.944 293.357C220.667 281.317 197.134 99.9441 193.337 90.1606C190.385 82.5541 138.436 31.745 115.452 9.49648Z" fill="#F9B233"/>
+</g>
+<g filter="url(#filter1_f_1205_640)">
+<path d="M71.6631 49.5888C65.9307 48.2979 60.0764 49.0931 54.6032 52.1861C41.645 59.5081 27.106 81.2467 60.3419 145.662C109.579 241.096 39.9986 373.996 39.9986 373.996L127.998 355.262L121.269 60.768L71.6663 49.5888H71.6631Z" fill="#FF9900"/>
+</g>
+<defs>
+<filter id="filter0_df_1205_640" x="0.997559" y="0.995789" width="226" height="414" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1205_640"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1205_640" result="shape"/>
+<feGaussianBlur stdDeviation="1" result="effect2_foregroundBlur_1205_640"/>
+</filter>
+<filter id="filter1_f_1205_640" x="37.9976" y="46.9958" width="92" height="329" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="1" result="effect1_foregroundBlur_1205_640"/>
+</filter>
+</defs>
+</svg>
