@@ -1,0 +1,36 @@
+.fleche {
+    position: fixed;
+    z-index: 1;
+    height: 10px;
+    width: 20px;
+    left: 18px;
+    top: 13px;
+
+
+}
+
+.bg-liste-musique {
+    background: #999;
+    height: 43px;
+    width: 100vw;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(1px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.liste-name-artiste {
+    color: #333;
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.margin-liste-musique {
+    margin-left: 30px;
+    margin-top: 35px;
+}
+
+.align-liste-musique{
+    align-items: center;
+}

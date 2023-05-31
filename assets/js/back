@@ -1,0 +1,319 @@
+window.onload = function () {
+
+    // Définition de l'URL de l'API et du jeton d'accès
+    var apiUrl = 'https://music.freefakeapi.io/api/tracks?nopaginate=true';
+    var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJlbWFpbCI6Im4zcmQuYXNjQGdtYWlsLmNvbSIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE2ODU1MTUxNzYsImV4cCI6MTY4NTU1MTE3Nn0.zw_FNeaa_whA-mCHJ_VLb0rUQ0oe0fV4lASI-Ro4VF8";
+
+    // RÉCUPÉRATION DES CONTRÔLES AUDIO
+    const audio = new Audio(); // Balise <audio>
+    const track = document.querySelector("#track"); // Barre de progression
+    const customTrack = document.querySelector(".customProgressBar"); // Barre de progression BUSTOM
+    const trackDurationElement = document.querySelector(".trackDuration"); // Durée
+    const playPauseGroupBtns = document.querySelector(".playPauseBtnGroup") // Bouton PLAY
+    const playMusicBtn = document.querySelector(".play-button") // Bouton PLAY
+    const pauseMusicBtn = document.querySelector(".pause-button") // Bouton PAUSE
+    const randomBtn = document.querySelector(".randomBtn"); // Bouton RANDOM
+    const stopBtn = document.querySelector(".stopBtn"); // Bouton STOP
+    const whiteBkgProgressBar = document.querySelector(".progressBkg"); // Black progress bar
+
+    // GESTION DU BOUTON PLAY
+    playMusicBtn.addEventListener("click", function () {
+        playMusicBtn.style.display = "none";
+        pauseMusicBtn.style.display = "block";
+        whiteBkgProgressBar.style.display = "block";
+        playPauseGroupBtns.classList.add("playAnimation");
+        audio.play();
+    });
+
+    // GESTION DU BOUTON PAUSE
+    pauseMusicBtn.addEventListener("click", function () {
+        pauseMusicBtn.style.display = "none";
+        playMusicBtn.style.display = "block";
+        playPauseGroupBtns.classList.remove("playAnimation");
+        audio.pause();
+    });
+
+
+
+    // GESTION DU BOUTON STOP
+    stopBtn.addEventListener("click", function () {
+        pauseMusicBtn.style.display = "none";
+        whiteBkgProgressBar.style.display = "none";
+        playMusicBtn.style.display = "block";
+        playPauseGroupBtns.classList.remove("playAnimation");
+        audio.pause();
+        audio.currentTime = 0;
+    });
+
+    // GESTION DE LA BARRE DE PROGRESSION
+    audio.addEventListener("timeupdate", function () {
+        track.value = this.currentTime;
+        track.setAttribute("max", audio.duration);
+
+        // Mise à jour du temps écoulé
+        let elapsedMinutes = Math.floor(this.currentTime / 60);
+        let elapsedSeconds = Math.floor(this.currentTime % 60);
+        let formattedElapsed = `${elapsedMinutes.toString().padStart(2, '0')}:${elapsedSeconds.toString().padStart(2, '0')}`;
+        trackDurationElement.textContent = formattedElapsed;
+    });
+
+    // Fonction pour mettre à jour la position de lecture de la barre de progression personnalisée
+    function updateCustomProgressBar() {
+        const currentTime = audio.currentTime; // Temps de lecture actuel de la musique
+        const duration = audio.duration; // Durée totale de la musique
+
+        const progressElement = document.querySelector(".progress");
+        const progressWidth = (currentTime / duration) * 100 + "%";
+        progressElement.style.width = progressWidth;
+
+        // Afficher le temps de lecture en secondes dans la console
+        // console.log("CUSTOM BAR VALUE IN SECONDS : " + currentTime);
+    }
+
+    // Écouteur d'événement pour détecter un clic sur la barre de progression personnalisée
+    customTrack.addEventListener("click", function (clickEvent) {
+        const seekPosition = clickEvent.offsetX; // Récupérer la position sur la barre de progression
+        const progressBarWidth = customTrack.offsetWidth; // Récupérer la largeur totale de la barre de progression
+        const seekTime = (seekPosition / progressBarWidth) * audio.duration; // Calculer le temps de recherche en fonction de la position du clic
+
+        audio.currentTime = seekTime; // Mettre à jour le temps de lecture de la musique
+
+        updateCustomProgressBar(); // Mettre à jour la position de lecture de la barre de progression personnalisée
+
+        whiteBkgProgressBar.style.display = "block";
+
+        console.log("AUDIO BAR VALUE IN SECONDS : " + track.value)
+
+        progressTimeUpdate = track.value;
+
+        // console.log("progressTimeUpdate : " + progressTimeUpdate)
+    });
+
+    // Mettre à jour la position de lecture de la barre de progression personnalisée à intervalles réguliers
+    setInterval(updateCustomProgressBar, 0); // Mettre à jour
+
+
+
+
+    // Mise à jour de la position de lecture lors du déplacement de la barre de progression
+    // track.addEventListener("input", function () {
+    //     const seekTime = track.value;
+    //     audio.currentTime = seekTime;
+    // });
+
+    // Mise à jour de la barre de progression lorsque la musique se termine
+    // audio.addEventListener("ended", function () {
+    //     track.value = 0;
+    //     trackDurationElement.textContent = "";
+    // });
+
+    // Fonction pour jouer de la musique à partir de l'API
+    function playAudioFromAPI(apiUrl, accessToken) {
+        // FETCH DES PISTES
+        fetch(apiUrl, {
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                // GÉNÈRE UN NOMBRE ENTIER ALÉATOIRE
+                var i = Math.floor(Math.random() * data.length);
+
+                // AFFICHE LES CATÉGORIES DE MUSIQUE DE LA CHANSON AFFICHÉE
+                let trackCategory = document.querySelector('.trackCategory');
+                let genreUrls = data[i].categories;
+
+                // STOCKE LES NOMS DES GENRES DE MUSIQUE
+                let genreNames = [];
+
+                // FONCTION ASYNCHRONE POUR OBTENIR LE NOM DES GENRES
+                async function fetchGenreNames() {
+                    for (let j = 0; j < genreUrls.length; j++) {
+                        let genreUrl = "https://music.freefakeapi.io" + genreUrls[j];
+
+                        try {
+                            let response = await fetch(genreUrl, {
+                                headers: {
+                                    'Authorization': 'Bearer ' + accessToken
+                                }
+                            });
+
+                            let data = await response.json();
+                            genreNames.push(data.name);
+                        } catch (error) {
+                            console.log('Erreur lors de la récupération des genres:', error);
+                        }
+                    }
+                }
+                Object.keys(data).forEach(function (value, key) {
+                    // console.log(data[key].id);
+                    fetch('https://music.freefakeapi.io' + data[key].artist, {
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken
+                        }
+                    }).then(response => response.json()).then(data => {
+                        // console.log("artist : " + data.name);
+                    })
+
+
+                })
+
+
+
+
+                // APPEL DE LA FONCTION ASYNCHRONE
+                fetchGenreNames()
+                    .then(() => {
+                        trackCategory.innerHTML = genreNames.join(', ');
+                    })
+                    .catch(error => {
+                        console.log('Erreur lors de la récupération des genres:', error);
+                    });
+
+                // AFFICHE LE TITRE
+                let trackTitle = document.querySelector('.trackTitle');
+                trackTitle.textContent = data[i].title;
+
+                // JOUE LA PISTE DANS LE LECTEUR AUDIO
+                let trackURL = "https://music.freefakeapi.io" + data[i].file;
+
+                console.log(trackURL)
+                audio.src = trackURL;
+
+                console.log(data)
+
+                // -------------------------------------------------------------------- JOUER UNE PISTE ALEATOIREMENT EN CLIQUANT SUR RANDOM
+
+                // GESTION DU BOUTON (RANDOM)
+                randomBtn.addEventListener("click", function () {
+
+                    // ------------------------------------------  Changer de page vers une URL spécifique pour jouer aléatoirement -------------- TRICHE PAS BIEN !!!!!!
+                    // window.location.href = "audioPlayer.html";
+                    // ------------------------------------------  Changer de page vers une URL spécifique pour jouer aléatoirement -------------- TRICHE PAS BIEN !!!!!!
+
+                    var randomIndex = Math.floor(Math.random() * data.length);
+                    console.log(randomIndex)
+
+                    whiteBkgProgressBar.style.display = "block";
+
+                    // AFFICHE LA COUVERTURE (RANDOM)
+                    let trackImage = document.querySelector('.trackImage');
+                    trackImage.src = "https://music.freefakeapi.io" + data[randomIndex].cover;
+
+                    // AFFICHE LE TITRE (RANDOM)
+                    let trackTitle = document.querySelector('.trackTitle');
+                    trackTitle.textContent = data[randomIndex].title;
+                    console.log("TITRE AFFICHÉ QUAND RANDOM CLIQUÉ  " + data[randomIndex].title)
+                    trackTitle.textContent = data[randomIndex].title;
+
+                    // AFFICHE L'ARTISTE (RANDOM)
+                    let trackArtist = document.querySelector('.trackArtist');
+                    console.log("ARTISTE AFFICHÉ QUAND RANDOM CLIQUÉ  " + JSON.stringify(data[randomIndex].artist))
+                    trackArtist.textContent = JSON.stringify(data[randomIndex].artist);
+
+
+
+                    // JOUE LA PISTE DANS LE LECTEUR AUDIO (RANDOM)
+                    let randomtrackURL = "https://music.freefakeapi.io" + data[randomIndex].file;
+                    console.log(randomtrackURL)
+                    audio.src = randomtrackURL;
+
+                    playMusicBtn.style.display = "none";
+                    pauseMusicBtn.style.display = "block";
+                    playPauseGroupBtns.classList.toggle("playAnimation");
+                    trackArtist.textContent = data[randomIndex].name;
+                    console.log(data[randomIndex].file)
+                    audio.play();
+
+                    // ----------------------------
+
+                    // 1. FAIRE UN FETCH de 
+                    // 2. DEMANDER LONGUEUR DATA
+                    // 3. RECUPERER 1 CHANSON ALEA
+                    // 4. JOUER LA CHANSON DANS LE LECTEUR
+
+
+                });
+                // -------------------------------------------------------------------------------------------------------------------------
+
+                // AFFICHE LA DURÉE
+                let duration = data[i].duration;
+                let time = new Date(duration);
+                let minutes = time.getMinutes();
+                let seconds = time.getSeconds();
+                let formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                trackDurationElement.textContent = formattedTime;
+
+                // ARRETER L'ANIMATION DU VYNIL ET STOP QUAND LA MUSIQUE EST TERMINEE
+                audio.addEventListener("ended", function () {
+                    pauseMusicBtn.style.display = "none";
+                    playMusicBtn.style.display = "block";
+                    whiteBkgProgressBar.style.display = "none";
+                    playPauseGroupBtns.classList.remove("playAnimation");
+                    audio.pause();
+                    audio.currentTime = 0;
+                });
+
+
+
+                // AFFICHE LA COUVERTURE
+                let trackImage = document.querySelector('.trackImage');
+                trackImage.src = "https://music.freefakeapi.io" + data[i].cover;
+
+                // AFFICHE LE NOM DE L'ARTISTE
+                fetch("https://music.freefakeapi.io" + data[i].artist, {
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        let trackArtist = document.querySelector('.trackArtist');
+                        trackArtist.textContent = data.name;
+                    })
+                    .catch(error => {
+                        console.log('Erreur lors de la récupération de l\'artiste:', error);
+                    });
+            })
+            .catch(error => {
+                console.log('Erreur lors de la récupération des pistes audio:', error);
+            });
+    }
+
+    // APPEL DE LA FONCTION POUR JOUER LA MUSIQUE A PARTIR DE L'API
+    playAudioFromAPI(apiUrl, accessToken);
+
+    // FONCTION POUR CHANGER LA COULEUR DU CŒUR LORSQU'IL EST CLIQUÉ
+    function toggleFavorite() {
+        let FavIcon = document.querySelector('.heartFav');
+        let isClicked = FavIcon.getAttribute('data-clicked');
+
+        if (isClicked === 'true') {
+            // L'élément a déjà été cliqué, donc on le met en état non cliqué
+            FavIcon.src = "assets/icons/favHeart.svg";
+            FavIcon.setAttribute('data-clicked', 'false');
+        } else {
+            // L'élément n'a pas été cliqué, donc on le met en état cliqué
+            FavIcon.src = "assets/icons/favHeartClicked.svg";
+            FavIcon.setAttribute('data-clicked', 'true');
+        }
+    }
+
+    // AFFICHAGE DE LA FENÊTRE DIALOGUE AU CLIC sur .dotLink
+    document.querySelector('.dotLink').addEventListener('click', function () {
+        var bottomSheet = document.getElementById('bottomSheet');
+        bottomSheet.classList.toggle('open');
+        var overlay = document.getElementById('overlay');
+        overlay.classList.toggle('hideShowOverlay');
+    });
+
+    // DISPARITION DE LA FENÊTRE DIALOGUE AU CLIC SUR .overlay
+    document.querySelector('.overlay').addEventListener('click', function () {
+        var bottomSheet = document.getElementById('bottomSheet');
+        bottomSheet.classList.toggle('open');
+        var overlay = document.getElementById('overlay');
+        overlay.classList.toggle('hideShowOverlay');
+    });
+
+}
