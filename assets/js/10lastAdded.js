@@ -16,8 +16,15 @@ fetch('https://music.freefakeapi.io/api/tracks?order=latest&limit=10', {
                 const coverElement = document.createElement('img');
                 coverElement.classList.add('cover-accueil');
                 coverElement.src = "https://music.freefakeapi.io/" + track.cover;
-
+                coverElement.setAttribute("data-id", track.id);
                 tracksContainer.appendChild(coverElement);
+
+                coverElement.addEventListener("click", function () {
+                    console.log("RECENTLY ADDED CLICKED")
+                    console.log(this.dataset.id)
+                    localStorage.idMusic = this.dataset.id;
+                    window.location.href = "audioPlayer.html"
+                })
             });
         } else {
             console.log('Les données renvoyées ne sont pas au format attendu.');
@@ -47,10 +54,17 @@ function fetchRecentlyPlayed() {
 
                     const coverElement = document.createElement('img');
                     coverElement.classList.add('cover-accueil');
+                    coverElement.classList.add('scroll-cover-accueil');
                     coverElement.src = "https://music.freefakeapi.io/" + track.cover;
 
                     recentlyPlayedContainer.appendChild(coverElement);
-                    
+
+                    coverElement.addEventListener("click", function () {
+                        console.log("RECENTLY LISTENED CLICKED")
+                        console.log(this)
+                        window.location.href = "audioPlayer.html"
+                    })
+
                 });
             } else {
                 console.log('Les données renvoyées ne sont pas au format attendu.');

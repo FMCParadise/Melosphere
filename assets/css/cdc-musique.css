@@ -73,6 +73,7 @@
 .image-musique {
   margin-bottom: 5%;
   margin-right: 5px;
+  width: 90px;
 }
 
 .texte-musique {
@@ -87,7 +88,7 @@
 
 .musique {
   display: flex;
-  align-items: end;
+  flex-direction: column;
   padding-bottom: 15px;
 }
 
@@ -95,4 +96,8 @@
   width: 100vw;
   position: fixed;
   bottom: 0;
+}
+
+.model {
+  display: none;
 }/*# sourceMappingURL=cdc-musique.css.map */

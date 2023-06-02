@@ -28,7 +28,7 @@ loginForm.addEventListener('submit', async (e) => {
             console.log("Token d'accès: " + data.token);
             console.log('Connexion réussie !');
             // Redirection vers la page d'accueil
-            window.location.href = 'index.html';
+            window.location.href = 'accueil-jour.html';
         } else {
             // Affichage d'un message d'erreur en cas d'échec de la connexion
             console.log('Erreur lors de la connexion : ' + data.error);

@@ -60,158 +60,12 @@ let $mainLoader = document.querySelector('.mainLoader');
 
 //get  main 
 let $main = document.querySelector('main');
+let $header = document.querySelector('header')
 
 //per default hide main 
 $main.hide();
+$header.hide();
 
-
-//get $cover 
-let $cover = $main.querySelector('.trackImage');
-
-//bind event onload on image cover 
-$cover.onload = function (e) {
-    e.target.parentElement.querySelector('.loading-img').hide();
-    this.show();
-    // this.show().setOpacity('visible');
-}
-
-//get player html 
-let $player = $main.querySelector('audio');
-let pauseMusicBtn = document.querySelector(".pause-button") // Bouton PAUSE
-let whiteBkgProgressBar = document.querySelector(".progressBkg"); // Black progress bar
-let playMusicBtn = document.querySelector(".play-button")// Bouton PLAY
-let playPauseGroupBtns = document.querySelector(".playPauseBtnGroup") // Bouton PLAY
-let stopBtn = document.querySelector(".stopBtn"); // Bouton STOP
-let track = document.querySelector("#track"); // Barre de progression
-let trackDurationElement = document.querySelector(".trackDuration"); // Durée
-let progressElement = $main.querySelector(".progress");
-let customTrack = $main.querySelector(".customProgressBar"); // Barre de progression BUSTOM
-let randomBtn = $main.querySelector('.randomBtn');
-let favIcon = document.querySelector('.heartFav');//icon fav empty
-
-//bind event click  play  on playMusicBtn
-playMusicBtn.addEventListener("click", function () {
-    playMusicBtn.hide();
-    pauseMusicBtn.show();
-    whiteBkgProgressBar.show();
-    playPauseGroupBtns.classList.add("playAnimation");
-    $player.play();
-    addMusicOnLatest();
-});
-
-//bind event click pause on pauseMusicBtn
-pauseMusicBtn.addEventListener("click", function () {
-    pauseMusicBtn.hide();
-    playMusicBtn.show()
-    playPauseGroupBtns.classList.remove("playAnimation");
-    $player.pause();
-});
-
-//bind event click stop on pause btn 
-stopBtn.addEventListener("click", function () {
-    pauseMusicBtn.hide()
-    whiteBkgProgressBar.hide()
-    playMusicBtn.show()
-    playPauseGroupBtns.classList.remove("playAnimation");
-    $player.pause();
-    $player.currentTime = 0;
-});
-
-//bind event click stop on pause btn 
-favIcon.addEventListener("click", function () {
-
-    if (!this.classList.contains('liked')) {
-        favIcon.src = 'assets/icons/favHeartClicked.svg';
-        favIcon.classList.add('liked');
-        //add music on fav 
-        addMusicToFavorites();
-
-    } else {
-        favIcon.classList.remove('liked');
-        favIcon.src = 'assets/icons/favHeart.svg';
-        removeMusicToFavorites();
-    }
-
-});
-
-// ARRETER L'ANIMATION DU VYNIL ET STOP QUAND LA MUSIQUE EST TERMINEE
-$player.addEventListener("ended", function () {
-    pauseMusicBtn.hide();
-    playMusicBtn.show();
-    whiteBkgProgressBar.hide();
-    playPauseGroupBtns.classList.remove("playAnimation");
-    $player.pause();
-    $player.currentTime = 0;
-});
-
-
-// GESTION DE LA BARRE DE PROGRESSION
-$player.addEventListener("timeupdate", function () {
-    track.value = this.currentTime;
-    track.setAttribute("max", $player.duration);
-
-    // Mise à jour du temps écoulé
-    let elapsedMinutes = Math.floor(this.currentTime / 60);
-    let elapsedSeconds = Math.floor(this.currentTime % 60);
-    let formattedElapsed = `${elapsedMinutes.toString().padStart(2, '0')}:${elapsedSeconds.toString().padStart(2, '0')}`;
-    trackDurationElement.textContent = formattedElapsed;
-
-    let currentTime = $player.currentTime; // Temps de lecture actuel de la musique
-    let duration = $player.duration; // Durée totale de la musique
-
-    let progressWidth = (currentTime / duration) * 100 + "%";
-    progressElement.style.width = progressWidth;
-
-
-});
-
-// Écouteur d'événement pour détecter un clic sur la barre de progression personnalisée
-customTrack.addEventListener("click", function (clickEvent) {
-    let seekPosition = clickEvent.offsetX; // Récupérer la position sur la barre de progression
-    let progressBarWidth = customTrack.offsetWidth; // Récupérer la largeur totale de la barre de progression
-    let seekTime = (seekPosition / progressBarWidth) * $player.duration; // Calculer le temps de recherche en fonction de la position du clic
-
-    $player.currentTime = seekTime; // Mettre à jour le temps de lecture de la musique
-
-    // updateCustomProgressBar(); // Mettre à jour la position de lecture de la barre de progression personnalisée
-
-    whiteBkgProgressBar.show();
-
-    progressTimeUpdate = track.value;
-
-});
-
-
-//bind event click to random btn 
-randomBtn.addEventListener("click", function (clickEvent) {
-    //stop music 
-    stopBtn.click();
-    //show loader 
-    $main.hide();
-    $mainLoader.show();
-
-    getRandomTrack().then(tracks => {
-
-        let tracksLenght = Object.keys(tracks).length;
-
-        if (tracksLenght > 0) {
-
-            let indexRandom = Math.floor(Math.random() * tracksLenght);
-
-            setPlayer(tracks[indexRandom]);
-
-
-        } else {
-            throw 'no  randoms data tracks returned'
-        }
-
-
-
-    }).catch(randomError => {
-        console.log(randomError)
-    });
-
-});
 
 /**
  * Methode to get tracks random 
@@ -315,94 +169,9 @@ let getCategoryById = function (idCat = null) {
     })
 }
 
-/**
- * Methode to set data on player HTMLElement 
- * @param {Object} track 
- */
-let setPlayer = function (track) {
-    //update id music on localstorage 
-    localStorage.idMusic = track.id;
-
-    //show player && hide loader 
-    $mainLoader.hide()
-    $main.show()
-
-    //set cover src 
-    $cover.src = urlApi + track.cover;
-
-    //bind new src Audio 
-    $player.src = urlApi + track.file;
-
-    //bind title track 
-    $main.querySelector('.trackTitle').textContent = track.title;
-
-    //bind duration 
-    $main.querySelector('.trackDuration').textContent = formattedDuration(track.duration);
-
-    //check if this track on  favories user 
-    if (track.is_favorite) {
-        favIcon.src = 'assets/icons/favHeartClicked.svg';
-        favIcon.classList.add('liked')
-    } else {
-        favIcon.classList.remove('liked')
-        favIcon.src = 'assets/icons/favHeart.svg';
-    }
-
-    let idArtist = track.artist.replace('/api/artists/', '');
-
-    //call api to get artiste info 
-    getArtistInfo(idArtist).then(info => {
-        if (info.name)
-            $main.querySelector('.trackArtist').textContent = info.name;
-        else
-            throw 'error bad data artist info ';
-
-    }).catch(errorInfo => {
-        $main.querySelector('.trackArtist').textContent = '...'
-        console.log(errorInfo);
-    });
-
-    $main.querySelector('.trackCategory').textContent = "";
-    //get categories array 
-    let idsCat = track.categories;
-
-    //foreach on idsCat to  call and return name of categories
-    idsCat.forEach(cat => {
-
-        //     //call api to get artiste info 
-        getCategoryById(cat.replace('/api/categories/', '')).then(infoCat => {
-            if (infoCat.name) {
-                let elToAppend = document.createElement('span');
-                elToAppend.classList.add('item-genre');
-                elToAppend.setAttribute('id-cat', infoCat.id)
-                elToAppend.textContent = infoCat.name;
-                $main.querySelector('.trackCategory').append(elToAppend)
-            }
-            else
-                throw 'error bad data artist info ';
-
-        }).catch(errorInfo => {
-            $main.querySelector('.trackArtist').textContent = '...'
-            console.log(errorInfo);
-        })
 
 
 
-    });
-
-}
-
-
-//call api to get track by and &&  set on html 
-getMusicById(idMusic).then((track) => {
-    if (track.artist) {
-        setPlayer(track);
-    } else {
-        throw 'bad data track';
-    }
-}).catch(error => {
-    console.log(error)
-});
 
 /**
  * methode to add track to fav
@@ -457,15 +226,15 @@ let removeMusicToFavorites = function () {
 /**
  * UPDATE music last play 
  */
-let addMusicOnLatest = function(){
+let addMusicOnLatest = function () {
 
     let idMusic = localStorage.idMusic;
 
     let form = {
-        last_play: new Date ,
+        last_play: new Date,
     }
 
-    fetch(urlApi + '/api/tracks/'+ idMusic, {
+    fetch(urlApi + '/api/tracks/' + idMusic, {
         method: 'PATCH',
         headers: {
             'Authorization': 'Bearer ' + accessToken,
@@ -478,11 +247,312 @@ let addMusicOnLatest = function(){
     }).catch(ErrorUpdateLatest => {
         console.log(ErrorUpdateLatest);
     })
+}
+
+if (/audioPlayer.html/.test(window.location.href)) {
+    /**
+ * Methode to set data on player HTMLElement 
+ * @param {Object} track 
+ */
+    let setPlayer = function (track) {
+        //update id music on localstorage 
+        localStorage.idMusic = track.id;
+
+        //show player && hide loader 
+        $mainLoader.hide()
+        $main.show()
+        $header.show()
+
+        //set cover src 
+        $cover.src = urlApi + track.cover;
+
+        //bind new src Audio 
+        $player.src = urlApi + track.file;
+
+        //bind title track 
+        $main.querySelector('.trackTitle').textContent = track.title;
+
+        //bind duration 
+        $main.querySelector('.trackDuration').textContent = formattedDuration(track.duration);
+
+        //check if this track on  favories user 
+        if (track.is_favorite) {
+            favIcon.src = 'assets/icons/favHeartClicked.svg';
+            favIcon.classList.add('liked')
+        } else {
+            favIcon.classList.remove('liked')
+            favIcon.src = 'assets/icons/favHeart.svg';
+        }
+
+        let idArtist = track.artist.replace('/api/artists/', '');
+
+        //call api to get artiste info 
+        getArtistInfo(idArtist).then(info => {
+            if (info.name)
+                $main.querySelector('.trackArtist').textContent = info.name;
+            else
+                throw 'error bad data artist info ';
+
+        }).catch(errorInfo => {
+            $main.querySelector('.trackArtist').textContent = '...'
+            console.log(errorInfo);
+        });
+
+        $main.querySelector('.trackCategory').textContent = "";
+        //get categories array 
+        let idsCat = track.categories;
+
+        //foreach on idsCat to  call and return name of categories
+        idsCat.forEach(cat => {
+
+            //     //call api to get artiste info 
+            getCategoryById(cat.replace('/api/categories/', '')).then(infoCat => {
+                if (infoCat.name) {
+                    let elToAppend = document.createElement('span');
+                    elToAppend.classList.add('item-genre');
+                    elToAppend.setAttribute('id-cat', infoCat.id)
+                    elToAppend.textContent = infoCat.name;
+                    $main.querySelector('.trackCategory').append(elToAppend)
+                }
+                else
+                    throw 'error bad data artist info ';
+
+            }).catch(errorInfo => {
+                $main.querySelector('.trackArtist').textContent = '...'
+                console.log(errorInfo);
+            })
+
+
+
+        });
+
+    }
+
+
+    //get $cover 
+    let $cover = $main.querySelector('.trackImage');
+    //bind event onload on image cover 
+    $cover.onload = function (e) {
+        e.target.parentElement.querySelector('.loading-img').hide();
+        this.show();
+        // this.show().setOpacity('visible');
+    }
+    //get player html 
+    let $player = $main.querySelector('audio');
+    let pauseMusicBtn = document.querySelector(".pause-button") // Bouton PAUSE
+    let whiteBkgProgressBar = document.querySelector(".progressBkg"); // Black progress bar
+    let playMusicBtn = document.querySelector(".play-button")// Bouton PLAY
+    let playPauseGroupBtns = document.querySelector(".playPauseBtnGroup") // Bouton PLAY
+    let stopBtn = document.querySelector(".stopBtn"); // Bouton STOP
+    let track = document.querySelector("#track"); // Barre de progression
+    let trackDurationElement = document.querySelector(".trackDuration"); // Durée
+    let progressElement = $main.querySelector(".progress");
+    let customTrack = $main.querySelector(".customProgressBar"); // Barre de progression BUSTOM
+    let randomBtn = $main.querySelector('.randomBtn');
+    let favIcon = document.querySelector('.heartFav');//icon fav empty
+
+    //bind event click  play  on playMusicBtn
+    playMusicBtn.addEventListener("click", function () {
+        playMusicBtn.hide();
+        pauseMusicBtn.show();
+        whiteBkgProgressBar.show();
+        playPauseGroupBtns.classList.add("playAnimation");
+        $player.play();
+        addMusicOnLatest();
+    });
+
+    //bind event click pause on pauseMusicBtn
+    pauseMusicBtn.addEventListener("click", function () {
+        pauseMusicBtn.hide();
+        playMusicBtn.show()
+        playPauseGroupBtns.classList.remove("playAnimation");
+        $player.pause();
+    });
+
+    //bind event click stop on pause btn 
+    stopBtn.addEventListener("click", function () {
+        pauseMusicBtn.hide()
+        whiteBkgProgressBar.hide()
+        playMusicBtn.show()
+        playPauseGroupBtns.classList.remove("playAnimation");
+        $player.pause();
+        $player.currentTime = 0;
+    });
+
+    //bind event click stop on pause btn 
+    favIcon.addEventListener("click", function () {
+
+        if (!this.classList.contains('liked')) {
+            favIcon.src = 'assets/icons/favHeartClicked.svg';
+            favIcon.classList.add('liked');
+            //add music on fav 
+            addMusicToFavorites();
+
+        } else {
+            favIcon.classList.remove('liked');
+            favIcon.src = 'assets/icons/favHeart.svg';
+            removeMusicToFavorites();
+        }
+
+    });
+
+    // ARRETER L'ANIMATION DU VYNIL ET STOP QUAND LA MUSIQUE EST TERMINEE
+    $player.addEventListener("ended", function () {
+        pauseMusicBtn.hide();
+        playMusicBtn.show();
+        whiteBkgProgressBar.hide();
+        playPauseGroupBtns.classList.remove("playAnimation");
+        $player.pause();
+        $player.currentTime = 0;
+    });
+
+
+    // GESTION DE LA BARRE DE PROGRESSION
+    $player.addEventListener("timeupdate", function () {
+        track.value = this.currentTime;
+        track.setAttribute("max", $player.duration);
+
+        // Mise à jour du temps écoulé
+        let elapsedMinutes = Math.floor(this.currentTime / 60);
+        let elapsedSeconds = Math.floor(this.currentTime % 60);
+        let formattedElapsed = `${elapsedMinutes.toString().padStart(2, '0')}:${elapsedSeconds.toString().padStart(2, '0')}`;
+        trackDurationElement.textContent = formattedElapsed;
+
+        let currentTime = $player.currentTime; // Temps de lecture actuel de la musique
+        let duration = $player.duration; // Durée totale de la musique
+
+        let progressWidth = (currentTime / duration) * 100 + "%";
+        progressElement.style.width = progressWidth;
+
+
+    });
+
+    // Écouteur d'événement pour détecter un clic sur la barre de progression personnalisée
+    customTrack.addEventListener("click", function (clickEvent) {
+        let seekPosition = clickEvent.offsetX; // Récupérer la position sur la barre de progression
+        let progressBarWidth = customTrack.offsetWidth; // Récupérer la largeur totale de la barre de progression
+        let seekTime = (seekPosition / progressBarWidth) * $player.duration; // Calculer le temps de recherche en fonction de la position du clic
+
+        $player.currentTime = seekTime; // Mettre à jour le temps de lecture de la musique
+
+        // updateCustomProgressBar(); // Mettre à jour la position de lecture de la barre de progression personnalisée
+
+        whiteBkgProgressBar.show();
+
+        progressTimeUpdate = track.value;
+
+    });
+
+
+    //bind event click to random btn 
+    randomBtn.addEventListener("click", function (clickEvent) {
+        //stop music 
+        stopBtn.click();
+        //show loader 
+        $main.hide();
+        $header.hide()
+        $mainLoader.show();
+
+        getRandomTrack().then(tracks => {
+
+            let tracksLenght = Object.keys(tracks).length;
+
+            if (tracksLenght > 0) {
+
+                let indexRandom = Math.floor(Math.random() * tracksLenght);
+
+                setPlayer(tracks[indexRandom]);
+
+
+            } else {
+                throw 'no  randoms data tracks returned'
+            }
+
+
+
+        }).catch(randomError => {
+            console.log(randomError)
+        });
+
+    });
+
+    //call api to get track by and &&  set on html 
+    getMusicById(idMusic).then((track) => {
+        if (track.artist) {
+            setPlayer(track);
+        } else {
+            throw 'bad data track';
+        }
+    }).catch(error => {
+        console.log(error)
+    });
+
 
 
 }
 
 
+if (/cdc-favoris-musique.html/.test(window.location.href)) {
+    fetch(urlApi + '/api/favorites', {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + accessToken,
+            "Accept": "application/json",
+            "Content-type": "application/json",
+        },
+    }).then(response => response.json())
+        .then((favoritesTracks) => {
+
+            console.log(favoritesTracks)
+            Object.keys(favoritesTracks).forEach((key) => {
+                let FavCardModel = document.querySelector("#FavoriteList .model").cloneNode(true);
+                FavCardModel.querySelector(".image-musique").src = urlApi + favoritesTracks[key].cover;
+                FavCardModel.querySelector("h2").textContent = favoritesTracks[key].title;
+                FavCardModel.querySelector(".licence").textContent = favoritesTracks[key].licence;
+                FavCardModel.querySelector(".duration").textContent = formattedDuration(favoritesTracks[key].duration);
+
+
+                getArtistInfo(favoritesTracks[key].id).then(info => {
+                    FavCardModel.querySelector(".name").textContent = info.name;
+                    FavCardModel.querySelector(".name").show()
+                })
+
+
+                favoritesTracks[key].categories.forEach(cat => {
+
+                    //     //call api to get artiste info 
+                    getCategoryById(cat.replace('/api/categories/', '')).then(infoCat => {
+                        if (infoCat.name) {
+                            FavCardModel.querySelector(".cat").textContent += infoCat.name;
+                            FavCardModel.querySelector(".cat").show()
+                        }
+                        else
+                            throw 'error bad data artist info ';
+
+                    }).catch(errorInfo => {
+                        $main.querySelector('.trackArtist').textContent = '...'
+                        console.log(errorInfo);
+                    })
+
+
+                    
+                })
+
+
+                FavCardModel.classList.remove("model");
+                FavCardModel.show('flex')
+                document.querySelector("#FavoriteList").append(FavCardModel)
+                console.log(FavCardModel)
+
+            })
+            document.querySelector("#FavoriteList .model").remove()
+
+            $main.show();
+            $header.show('flex')
+        }).catch(ErrorUpdateLatest => {
+            console.log(ErrorUpdateLatest);
+        })
+}
 
 
 
