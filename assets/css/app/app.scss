@@ -1,0 +1,123 @@
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: black;
+}
+
+main {
+
+  section#main-home {
+    display: block;
+    //height: calc(100vh - 70px) ;
+    height: 100vh;
+    width: 100%;
+    border: 1px solid red;
+    padding: 0;
+    margin: 0;
+    position: relative;
+
+
+
+
+    .connerie-list-1, .connerie-list-2 {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+    }
+
+
+    .connerie-list-1{
+      &:before {
+        content: "";
+        width: 130%;
+        height: 300px;
+        display: block;
+        position: absolute;
+        left: -29%;
+        top: -12%;
+        background-image: url(../images/connerie-1.svg);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        //border: 1px solid black;
+      }
+
+      &:after {
+        content: "";
+        width: 200px;
+        height: 200px;
+        display: block;
+        position: absolute;
+        left: -17%;
+        top: 35%;
+        background-image: url(../images/connerie-3.svg);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        //border: 1px solid black;
+      }
+
+
+
+
+    }
+    .connerie-list-2{
+      &:before {
+        content: "";
+        width: 50%;
+        height: 400px;
+        display: block;
+        position: absolute;
+        right: -30%;
+        bottom: 0;
+        /* background-color: red; */
+        background-image: url(../images/connerie-2.svg);
+        background-size: 130%;
+        background-repeat: no-repeat;
+        transform: rotate(357deg);
+      }
+
+      &:after {
+        display: none;
+        content: "";
+        width: 200px;
+        height: 200px;
+        display: block;
+        position: absolute;
+        left: -30%;
+        bottom: -10%;
+        background-image: url(../images/connerie-4.svg);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        //border: 1px solid black;
+      }
+
+
+      &.animation{
+        &:before{
+          animation: animateConnerie-2 1s ease-in ;
+          animation-fill-mode: forwards;
+        }
+      }
+      
+      @keyframes animateConnerie-2 {
+        0%{
+          right: -30%;
+          bottom: 0;
+          transform: rotate(357deg);
+        }
+
+        100%{
+          right: -30%;
+          bottom: 0;
+          transform: rotate(250deg);        }
+      }
+    }
+
+
+
+
+
+  }
+
+
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Register</title>
+    <link rel="icon" type="image/x-icon" href="assets/image/Ellipse 4.svg">
+    <link rel="stylesheet" href="assets/css/login.min.css">
+    <link rel="stylesheet" href="assets/css/register.min.css">
+    <script src="assets/js/register.js" defer></script>
+</head>
+
+<body>
+    <!-- REGISTER FORM  -->
+    <form class="bg-connexion" id="registerForm">
+
+        <div class=" ellipse-connexion ">
+            <h1 class="se-connecter">INSCRIPTION</h1>
+
+            <label class="fz-email" for="pseudo">Pseudo </label>
+            <input type="pseudo" autocomplete="off" class="input mgt-input" id="pseudo" name="pseudo" placeholder=""
+                required />
+
+            <label class="fz-email  " for="email">E-mail</label>
+            <input type="email" autocomplete="off" class="input mgt-input" id="email" name="email" placeholder=""
+                required />
+
+            <label class="fz-email " for="motdepasse">Mot de passe</label>
+            <input type="password" autocomplete="off" class="input mgt-input" id="password" name="motdepasse"
+                placeholder="" required />
+
+            <div class="checkbox">
+                <!-- <input class="lol" type="checkbox" id="rgpd" name="rgpd" unchecked required /> -->
+
+                <label for="rgpd">
+                    <input class="lol" type="checkbox" id="rgpd" name="rgpd" unchecked required />
+                    <span class="checkbox-icon"><i class="fas fa-check"></i></span>
+                </label>
+
+
+
+                <label for="scales">J'accepte la collecte de mes
+
+
+                    <span> informations</span>
+
+
+                </label>
+            </div>
+
+            <button type="submit" class="connexion">Continuer</button>
+
+
+        </div>
+
+    </form>
+
+</body>
+
+</html>

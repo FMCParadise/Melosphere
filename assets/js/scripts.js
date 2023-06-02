@@ -96,6 +96,7 @@ playMusicBtn.addEventListener("click", function () {
     whiteBkgProgressBar.show();
     playPauseGroupBtns.classList.add("playAnimation");
     $player.play();
+    addMusicOnLatest();
 });
 
 //bind event click pause on pauseMusicBtn
@@ -131,6 +132,16 @@ favIcon.addEventListener("click", function () {
         removeMusicToFavorites();
     }
 
+});
+
+// ARRETER L'ANIMATION DU VYNIL ET STOP QUAND LA MUSIQUE EST TERMINEE
+$player.addEventListener("ended", function () {
+    pauseMusicBtn.hide();
+    playMusicBtn.show();
+    whiteBkgProgressBar.hide();
+    playPauseGroupBtns.classList.remove("playAnimation");
+    $player.pause();
+    $player.currentTime = 0;
 });
 
 
@@ -351,6 +362,7 @@ let setPlayer = function (track) {
         console.log(errorInfo);
     });
 
+    $main.querySelector('.trackCategory').textContent = "";
     //get categories array 
     let idsCat = track.categories;
 
@@ -377,16 +389,6 @@ let setPlayer = function (track) {
 
 
     });
-
-    //edit event onloadedmetadata to trigger logic player 
-    $player.onloadedmetadata = function () {
-        // $player.play();
-
-        //add music latest list on api 
-        addMusicOnLatest() ; 
-
-
-    }
 
 }
 

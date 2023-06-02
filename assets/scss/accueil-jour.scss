@@ -58,6 +58,7 @@ body {
     margin-left: 12px;
     margin-top: 5px;
     margin-bottom: 17px;
+    // background-color: red;
 }
 
 .scroll-accueil {
@@ -65,10 +66,6 @@ body {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
-}
-
-.cover-accueil {
-    width: 100vw;
 }
 
 .scroll-cover-accueil {

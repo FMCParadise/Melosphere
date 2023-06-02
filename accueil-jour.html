@@ -8,11 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=ABeeZee&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/cdc-musique.css">
-    <link rel="stylesheet" href="assets/css/cdc-favoris-artiste.css">
-    <link rel="stylesheet" href="assets/css/accueil-jour.css">
-    <title>Document</title>
-
+    <link rel="stylesheet" href="assets/css/cdc-musique.min.css">
+    <link rel="stylesheet" href="assets/css/accueil-jour.min.css">
+    <title>Accueil jour</title>
+    <script src="assets/js/10lastAdded.js"></script>
 
 </head>
 
@@ -21,7 +20,7 @@
     <header>
         <div class="header-accueil">
             <img class="component-accueil" src="image/accueil-jour/Component 4.svg" alt="">
-            <img class="personcircle" src="image/accueil-jour/PersonCircle.svg" alt="">
+            <a href="connexion.html"> <img class="personcircle" src="image/accueil-jour/PersonCircle.svg" alt=""></a>
         </div>
     </header>
 
@@ -29,22 +28,19 @@
 
         <section>
 
-            <p class="titre-accueil">Récemment ajoutées</p>
+            <h1 class="titre-accueil">Récemment ajoutées</h1>
 
             <div class="scroll-accueil">
-                <img class="cover-accueil scroll-cover-accueil" src="image\fond\cover_559 3.svg" alt="">
-                <img class="cover-accueil" src="image\fond\cover_559 3.svg" alt="">
-                <img class="cover-accueil" src="image\fond\cover_559 3.svg" alt="">
+                <div class="container" id="tracks-container"></div>
             </div>
+
         </section>
         <section>
 
-            <p class="titre-accueil">Récemment écoutées</p>
+            <h1 class="titre-accueil">Récemment écoutées</h1>
 
             <div class="scroll-accueil">
-                <img class="cover-accueil scroll-cover-accueil" src="image\fond\cover_559 3.svg" alt="">
-                <img class="cover-accueil" src="image\fond\cover_559 3.svg" alt="">
-                <img class="cover-accueil" src="image\fond\cover_559 3.svg" alt="">
+                <div class="container" id="recently-played-container"></div>
             </div>
 
         </section>
