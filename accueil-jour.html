@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="assets/css/cdc-musique.min.css">
     <link rel="stylesheet" href="assets/css/accueil-jour.min.css">
     <title>Accueil jour</title>
-    <script src="assets/js/10lastAdded.js"></script>
+    <script src="assets/js/10lastAdded.js" defer></script>
+    <script src="assets/js/botMenuAnimation.js" defer></script>
 
 </head>
 
@@ -49,8 +50,17 @@
 
     <footer>
 
-        <img class="border-footer-cdc" src="image/fond/tab bar slide.svg" alt="">
-
+        <div class="container">
+        </div>
+        
+        <div class="footer">
+            <img id="image1" src="/assets/svg/Subtract3.svg" class="image botMenuLeft">
+            <img id="image2" src="/assets/svg/Subtract2.svg" class="image botMenuMiddle" style="display: none;">
+            <img id="image3" src="/assets/svg/Subtract.svg" class="top" style="display: none;">
+            <button id="home" class="top" ><img src="/assets/svg/icon_home.svg" alt="" class="icon homeIcon"></button>
+            <button id="search"><img src="/assets/svg/icon_search.svg" alt="" class="icon searchIcon"></button>
+            <button id="fav"><img src="/assets/svg/icon_fav.svg" alt="" class="icon heartIcon"></button>
+        </div>
     </footer>
 
 </body>

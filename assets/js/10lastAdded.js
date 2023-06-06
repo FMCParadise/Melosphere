@@ -77,3 +77,14 @@ function fetchRecentlyPlayed() {
 
 // Appeler la fonction pour récupérer les 8 derniers morceaux écoutés
 fetchRecentlyPlayed();
+
+function toggleImage(imageId) {
+    var image = document.getElementById(imageId);
+    image.classList.toggle("hidden");
+    var footer = document.querySelector(".footer");
+    if (footer.querySelectorAll(".image.hidden").length > 0) {
+        footer.classList.remove("show");
+    } else {
+        footer.classList.add("show");
+    }
+}

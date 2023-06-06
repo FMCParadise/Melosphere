@@ -20,7 +20,6 @@ body {
 
 .bg-accueil {
   font-size: 12px;
-  font-weight: 400;
   line-height: 14px;
   letter-spacing: 0em;
   text-align: left;
@@ -46,7 +45,7 @@ body {
 .main-accueil {
   display: flex;
   position: absolute;
-  top: 45%;
+  top: 42%;
   width: 100vw;
   transform: translateY(-50%);
   flex-direction: column;
@@ -59,7 +58,7 @@ body {
 }
 
 .titre-accueil {
-  margin-left: 40px;
+  margin-left: 15px;
 }
 
 #tracks-container,
@@ -68,15 +67,77 @@ body {
   overflow: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
+  margin-top: 5px;
 }
 #tracks-container .cover-accueil,
 #recently-played-container .cover-accueil {
-  height: 25vh;
+  height: 20vh;
   width: auto;
   border-radius: 14px;
   margin-left: 12px;
   margin-top: 5px;
   margin-bottom: 17px;
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+footer {
+  bottom: 0;
+  position: fixed;
+}
+
+.footer {
+  position: fixed;
+  min-height: 21.875vw;
+  bottom: 0;
+  width: 100%;
+}
+.footer button {
+  position: absolute;
+  top: -13.5px;
+  border: none;
+  background-color: transparent;
+  z-index: 1000;
+}
+.footer #home {
+  left: 16.875%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+}
+.footer #search {
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+}
+.footer .searchUp {
+  margin-top: 0;
+}
+.footer #fav {
+  left: 83.125%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+}
+
+.top {
+  top: -13.5px !important;
+  transform: translateX(-50%) !important;
+  transition: 0.2s;
+}
+
+.footer.show {
+  bottom: 0;
+}
+
+.image {
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  z-index: 998;
+}
+
+.icon {
+  background-color: transparent;
+  margin-left: 3px !important;
 }/*# sourceMappingURL=accueil-jour.css.map */
