@@ -271,6 +271,13 @@ p.trackDuration {
   margin-bottom: 2px;
 }
 
+.menuLinks {
+  background-color: red;
+  text-decoration: none;
+  outline: none;
+  color: #000000;
+}
+
 .bottomSheetLinkGroup {
   margin-top: 20px;
 }
