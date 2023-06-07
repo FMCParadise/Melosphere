@@ -55,6 +55,8 @@ function fetchRecentlyPlayed() {
                     const coverElement = document.createElement('img');
                     coverElement.classList.add('cover-accueil');
                     coverElement.classList.add('scroll-cover-accueil');
+                    coverElement.setAttribute("data-id", track.id);
+
                     coverElement.src = "https://music.freefakeapi.io/" + track.cover;
 
                     recentlyPlayedContainer.appendChild(coverElement);
@@ -62,6 +64,8 @@ function fetchRecentlyPlayed() {
                     coverElement.addEventListener("click", function () {
                         console.log("RECENTLY LISTENED CLICKED")
                         console.log(this)
+
+                        localStorage.idMusic = this.dataset.id;
                         window.location.href = "audioPlayer.html"
                     })
 
@@ -88,3 +92,25 @@ function toggleImage(imageId) {
         footer.classList.add("show");
     }
 }
+
+
+// MODAL LOGIN FORM
+var personCircle = document.querySelector('.personcircle');
+var modal = document.getElementById('modal');
+var registerModal = document.getElementById('registerModal');
+var registerLink = document.getElementById('register-link');
+var modalContent = document.getElementById('modal-content');
+
+personCircle.addEventListener('click', function () {
+
+    modal.style.display = 'block';
+
+});
+
+registerLink.addEventListener('click', function (event) {
+
+    registerModal.style.display = 'block';
+
+});
+
+

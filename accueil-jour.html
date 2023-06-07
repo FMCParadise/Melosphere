@@ -13,6 +13,9 @@
     <title>Accueil jour</title>
     <script src="assets/js/10lastAdded.js" defer></script>
     <script src="assets/js/botMenuAnimation.js" defer></script>
+    <script src="assets/js/login.js" defer></script>
+    <script src="assets/js/register.js" defer></script>
+
 
 </head>
 
@@ -21,11 +24,97 @@
     <header>
         <div class="header-accueil">
             <img class="component-accueil" src="image/accueil-jour/Component 4.svg" alt="">
-            <a href="index.html"> <img class="personcircle" src="image/accueil-jour/PersonCircle.svg" alt=""></a>
+            <a href="#"> <img class="personcircle" src="image/accueil-jour/PersonCircle.svg" alt=""></a>
         </div>
     </header>
 
     <main class="main-accueil">
+
+        <div id="modal" class="modal show-modal">
+            <div id="modal-content" class="modal-content">
+                <!-- LOGIN FORM  -->
+                <form class="bg-connexion" id="loginForm">
+                    <div class=" ellipse-connexion">
+                        <h1 class="se-connecter">SE CONNECTER</h1>
+
+                        <label class="fz-email" for="email">E-mail</label>
+                        <input type="email" autocomplete="off" class="input emailInput" id="email" name="email"
+                            placeholder="" required />
+
+
+
+                        <label class="fz-email" for="password">Mot de passe</label>
+                        <div class="input-container">
+                            <input type="password" autocomplete="off" class="input passwordInput" id="password"
+                                name="password" placeholder="Entrez votre mot de passe ..." required />
+                            <img class="img-eyeslash" src="assets/image/EyeSlash.svg" alt="">
+                        </div>
+
+                        <a class="mdp-oublier pdc" href="#">Mot de passe oublié ?</a>
+
+                        <button class="connexion" type="submit">Connexion</button>
+                        <p class="pas-de-compte">Pas encore de compte ? <a id="register-link" class="pdc registerLink"
+                                href="#">Inscrivez-vous</a>
+                        </p>
+
+                        <div class="center-white-bg">
+                            <div class="white-bg"></div>
+                            <div class="white-bg"></div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <!-- register modal -->
+        <div id="registerModal" class="modal show-modal">
+            <div id="modal-content" class="modal-content">
+                <!-- REGISTER FORM  -->
+                <form class="bg-connexion" id="registerForm">
+
+                    <div class=" ellipse-connexion ">
+                        <h1 class="se-connecter">INSCRIPTION</h1>
+
+                        <label class="fz-email" for="pseudo">Pseudo </label>
+                        <input type="pseudo" autocomplete="off" class="input mgt-input" id="pseudo" name="pseudo"
+                            placeholder="" required />
+
+                        <label class="fz-email  " for="email">E-mail</label>
+                        <input type="email" autocomplete="off" class="input mgt-input" id="register-email" name="email"
+                            placeholder="" required />
+
+                        <label class="fz-email " for="motdepasse">Mot de passe</label>
+                        <input type="password" autocomplete="off" class="input mgt-input" id="register-password"
+                            name="motdepasse" placeholder="" required />
+
+                        <div class="checkbox">
+
+                            <label for="rgpd">
+                                <input class="lol" type="checkbox" id="rgpd" name="rgpd" unchecked required />
+                                <span class="checkbox-icon"><i class="fas fa-check"></i></span>
+                            </label>
+
+
+
+                            <label for="scales">J'accepte la collecte de mes
+
+
+                                <span> informations</span>
+
+
+                            </label>
+                        </div>
+
+                        <button type="submit" class="connexion">Continuer</button>
+
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
 
         <section>
 
@@ -52,16 +141,17 @@
 
         <div class="container">
         </div>
-        
+
         <div class="footer">
             <img id="image1" src="/assets/svg/Subtract3.svg" class="image botMenuLeft">
             <img id="image2" src="/assets/svg/Subtract2.svg" class="image botMenuMiddle" style="display: none;">
             <img id="image3" src="/assets/svg/Subtract.svg" class="top" style="display: none;">
-            <button id="home" class="top" ><img src="/assets/svg/icon_home.svg" alt="" class="icon homeIcon"></button>
+            <button id="home" class="top"><img src="/assets/svg/icon_home.svg" alt="" class="icon homeIcon"></button>
             <button id="search"><img src="/assets/svg/icon_search.svg" alt="" class="icon searchIcon"></button>
             <button id="fav"><img src="/assets/svg/icon_fav.svg" alt="" class="icon heartIcon"></button>
         </div>
     </footer>
+
 
 </body>
 

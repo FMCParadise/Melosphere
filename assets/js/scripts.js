@@ -305,7 +305,7 @@ if (/audioPlayer.html/.test(window.location.href)) {
         //foreach on idsCat to  call and return name of categories
         idsCat.forEach(cat => {
 
-            //     //call api to get artiste info 
+            //     //call api to get category info 
             getCategoryById(cat.replace('/api/categories/', '')).then(infoCat => {
                 if (infoCat.name) {
                     let elToAppend = document.createElement('span');
@@ -507,13 +507,13 @@ if (/cdc-favoris-musique.html/.test(window.location.href)) {
             Object.keys(favoritesTracks).forEach((key) => {
                 let FavCardModel = document.querySelector("#FavoriteList .model").cloneNode(true);
                 FavCardModel.querySelector(".image-musique").src = urlApi + favoritesTracks[key].cover;
-                FavCardModel.querySelector("h2").textContent = favoritesTracks[key].title;
+                FavCardModel.querySelector("h4").textContent = "Titre: " + favoritesTracks[key].title;
                 FavCardModel.querySelector(".licence").textContent = favoritesTracks[key].licence;
-                FavCardModel.querySelector(".duration").textContent = formattedDuration(favoritesTracks[key].duration);
+                FavCardModel.querySelector(".duration").textContent = "Durée: " + formattedDuration(favoritesTracks[key].duration);
 
 
                 getArtistInfo(favoritesTracks[key].id).then(info => {
-                    FavCardModel.querySelector(".name").textContent = info.name;
+                    FavCardModel.querySelector(".name").textContent = "Auteur: " + info.name;
                     FavCardModel.querySelector(".name").show()
                 })
 

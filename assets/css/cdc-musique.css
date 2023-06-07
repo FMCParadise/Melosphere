@@ -9,12 +9,15 @@
   background-image: url(/image/fond/fond-body.svg);
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   width: 100vw;
   min-height: 100vh;
 }
 
 .fond_header {
+  top: -2px;
   width: 100vw;
+  position: fixed;
 }
 
 .navbar-cdc {
@@ -25,16 +28,11 @@
 
 .title-button-cdc {
   position: absolute;
+  position: fixed;
   width: 90vw;
   margin-left: 20px;
   margin-right: 20px;
   padding-top: 10%;
-}
-
-.title-cdc {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 19px;
 }
 
 .button-cdc {
@@ -61,13 +59,22 @@
   text-align: center;
 }
 
+#FavoriteList {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
 .margin-image-musique {
+  margin-top: 200px;
   margin-left: 30px;
   margin-right: 30px;
 }
 
 .liste-musique {
   display: flex;
+}
+.liste-musique img {
+  border-radius: 12px;
 }
 
 .image-musique {
@@ -77,7 +84,6 @@
 }
 
 .texte-musique {
-  font-size: 8px;
   font-weight: 400;
   line-height: 9px;
 }
@@ -87,9 +93,10 @@
 }
 
 .musique {
+  font-size: 10px;
   display: flex;
   flex-direction: column;
-  padding-bottom: 15px;
+  padding-top: 15px;
 }
 
 .border-footer-cdc {
