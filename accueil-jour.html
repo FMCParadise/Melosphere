@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=ABeeZee&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/cdc-musique.min.css">
     <link rel="stylesheet" href="assets/css/accueil-jour.min.css">
+    <link rel="icon" type="image/x-icon" href="assets/icons/playBtn.svg">
     <title>Accueil jour</title>
     <script src="assets/js/10lastAdded.js" defer></script>
     <script src="assets/js/botMenuAnimation.js" defer></script>
@@ -47,7 +48,8 @@
                         <div class="input-container">
                             <input type="password" autocomplete="off" class="input passwordInput" id="password"
                                 name="password" placeholder="Entrez votre mot de passe ..." required />
-                            <img class="img-eyeslash" src="assets/image/EyeSlash.svg" alt="">
+                            <img class="img-eyeslash" src="assets/images/EyeSlash.svg" alt="">
+                            <div class="LoginErrorMsg">* Account not found</div>
                         </div>
 
                         <a class="mdp-oublier pdc" href="#">Mot de passe oublié ?</a>
@@ -88,6 +90,9 @@
                         <input type="password" autocomplete="off" class="input mgt-input" id="register-password"
                             name="motdepasse" placeholder="" required />
 
+                            <!-- Register Error Msg -->
+                            <div class="LoginErrorMsg">* Password must contain at least...</div>
+
                         <div class="checkbox">
 
                             <label for="rgpd">
@@ -95,15 +100,7 @@
                                 <span class="checkbox-icon"><i class="fas fa-check"></i></span>
                             </label>
 
-
-
-                            <label for="scales">J'accepte la collecte de mes
-
-
-                                <span> informations</span>
-
-
-                            </label>
+                            <label for="scales" class="rgpdText">J'accepte la collecte de mes <span class="spanTxt">informations</span></label>
                         </div>
 
                         <button type="submit" class="connexion">Continuer</button>

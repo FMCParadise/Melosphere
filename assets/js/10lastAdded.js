@@ -20,7 +20,6 @@ fetch('https://music.freefakeapi.io/api/tracks?order=latest&limit=10', {
                 tracksContainer.appendChild(coverElement);
 
                 coverElement.addEventListener("click", function () {
-                    console.log("RECENTLY ADDED CLICKED")
                     console.log(this.dataset.id)
                     localStorage.idMusic = this.dataset.id;
                     window.location.href = "audioPlayer.html"
@@ -62,7 +61,6 @@ function fetchRecentlyPlayed() {
                     recentlyPlayedContainer.appendChild(coverElement);
 
                     coverElement.addEventListener("click", function () {
-                        console.log("RECENTLY LISTENED CLICKED")
                         console.log(this)
 
                         localStorage.idMusic = this.dataset.id;
@@ -112,5 +110,8 @@ registerLink.addEventListener('click', function (event) {
     registerModal.style.display = 'block';
 
 });
+
+
+
 
 

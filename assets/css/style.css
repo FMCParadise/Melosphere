@@ -239,6 +239,7 @@ p.trackDuration {
 }
 
 .overlay {
+  z-index: 997;
   position: fixed;
   top: 0;
   left: 0;

@@ -45,7 +45,6 @@ registerForm.addEventListener('submit', async (e) => {
         const data = await response.json();
 
         if (response.ok) {
-            debugger
             // Enregistrement réussi, récupération du token et stockage dans le localStorage
             const requestBody = {
                 email,

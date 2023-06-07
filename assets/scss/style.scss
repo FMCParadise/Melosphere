@@ -38,6 +38,7 @@
     }
 
     .trackCategory{
+        // background-color: red;
         .item-genre{
             display: inline-block;
             margin-right: 20px;
@@ -285,7 +286,7 @@ p.trackDuration {
 }
 
 .overlay {
-    // z-index: 997;
+    z-index: 997;
     position: fixed;
     top: 0;
     left: 0;

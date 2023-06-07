@@ -2,7 +2,7 @@
  * check if user has token in storage 
  */
 let accessToken = (localStorage.token) ? localStorage.token : null;
-if (!accessToken) window.location.href = 'index.html';
+if (!accessToken) window.location.href = 'accueil-jour.html';
 
 //path api music freefakeapi.io
 let urlApi = 'https://music.freefakeapi.io';
@@ -13,6 +13,7 @@ let urlApi = 'https://music.freefakeapi.io';
 let idMusic = (localStorage.idMusic) ? localStorage.idMusic : null;
 if (!idMusic) {
     console.log('navigation to home page ');
+    window.location.href = 'accueil-jour.html';
 };
 
 /**
@@ -503,7 +504,7 @@ if (/cdc-favoris-musique.html/.test(window.location.href)) {
     }).then(response => response.json())
         .then((favoritesTracks) => {
 
-            console.log(favoritesTracks)
+            // console.log(favoritesTracks);
             Object.keys(favoritesTracks).forEach((key) => {
                 let FavCardModel = document.querySelector("#FavoriteList .model").cloneNode(true);
                 FavCardModel.querySelector(".image-musique").src = urlApi + favoritesTracks[key].cover;
@@ -511,48 +512,48 @@ if (/cdc-favoris-musique.html/.test(window.location.href)) {
                 FavCardModel.querySelector(".licence").textContent = favoritesTracks[key].licence;
                 FavCardModel.querySelector(".duration").textContent = "Durée: " + formattedDuration(favoritesTracks[key].duration);
 
+                FavCardModel.dataset.id = favoritesTracks[key].id; // Ajout de l'ID de la musique en tant que dataset
+
+                FavCardModel.addEventListener('click', function () {
+                    localStorage.idMusic = this.dataset.id; // Stockage de l'ID de la musique dans localStorage
+                    window.location.href = "audioPlayer.html"; // Redirection vers la page "audioPlayer.html"
+                });
 
                 getArtistInfo(favoritesTracks[key].id).then(info => {
                     FavCardModel.querySelector(".name").textContent = "Auteur: " + info.name;
-                    FavCardModel.querySelector(".name").show()
-                })
-
+                    FavCardModel.querySelector(".name").show();
+                });
 
                 favoritesTracks[key].categories.forEach(cat => {
-
-                    //     //call api to get artiste info 
                     getCategoryById(cat.replace('/api/categories/', '')).then(infoCat => {
                         if (infoCat.name) {
                             FavCardModel.querySelector(".cat").textContent += infoCat.name;
-                            FavCardModel.querySelector(".cat").show()
+                            FavCardModel.querySelector(".cat").show();
+                        } else {
+                            throw 'error bad data artist info';
                         }
-                        else
-                            throw 'error bad data artist info ';
-
                     }).catch(errorInfo => {
-                        $main.querySelector('.trackArtist').textContent = '...'
+                        $main.querySelector('.trackArtist').textContent = '...';
                         console.log(errorInfo);
-                    })
-
-
-                    
-                })
-
+                    });
+                });
 
                 FavCardModel.classList.remove("model");
-                FavCardModel.show('flex')
-                document.querySelector("#FavoriteList").append(FavCardModel)
-                console.log(FavCardModel)
+                FavCardModel.show('flex');
+                document.querySelector("#FavoriteList").append(FavCardModel);
+            });
 
-            })
-            document.querySelector("#FavoriteList .model").remove()
+            document.querySelector("#FavoriteList .model").remove();
 
             $main.show();
-            $header.show('flex')
+            $header.show('flex');
         }).catch(ErrorUpdateLatest => {
             console.log(ErrorUpdateLatest);
-        })
+        });
 }
+
+
+
 
 
 

@@ -153,4 +153,127 @@ footer {
   padding: 20px;
   z-index: 999;
   background-color: rgb(0, 0, 0);
+}
+
+form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  color: #ffffff;
+}
+
+.ellipse-connexion {
+  background: #F9B233;
+  border-radius: 50%;
+  width: 405px;
+  height: 405px;
+  margin-top: 10px;
+  box-shadow: 0px 25px 25px #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.se-connecter {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  margin-top: 44px;
+}
+
+.input {
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  background-color: white;
+  opacity: 50%;
+  box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  transition: 300ms ease-in-out;
+}
+
+.input-container {
+  position: relative;
+}
+
+.img-eyeslash {
+  position: absolute;
+  top: 39%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.input {
+  height: 26px;
+  width: 250px;
+  border-radius: 4px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
+
+.checkbox {
+  padding: 25px 0;
+  width: 80%;
+}
+.checkbox .rgpdText {
+  font-size: 14px;
+}
+
+.mdp-oublier {
+  font-size: 10px;
+  margin-bottom: 43px;
+  margin-top: 18px;
+}
+
+.connexion {
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+  height: 26px;
+  width: 134px;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.pas-de-compte {
+  font-size: 10px;
+  margin-bottom: 27px;
+}
+
+.pdc {
+  color: #333;
+}
+
+.center-white-bg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.white-bg {
+  background: #fff;
+  width: 41px;
+  height: 3px;
+  margin-bottom: 2px;
+}
+
+.fz-email {
+  font-size: 12px;
+}
+
+.input[placeholder="Entrez votre mot de passe..."] {
+  text-align: center;
+}
+
+.modal-content {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.modal-content.hide {
+  opacity: 0;
 }/*# sourceMappingURL=accueil-jour.css.map */
